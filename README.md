@@ -1,2 +1,2 @@
-#React.JS 
-#Vanilla JavaScript
+* React.JS 
+* Vanilla JavaScript
