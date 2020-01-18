@@ -1,6 +1,6 @@
 import React from 'react';
 import './Person.css';
-import styled from 'styled-components'; 
+import styled from 'styled-components';
 
 
 
@@ -18,11 +18,11 @@ const person = (props) => {
           width: 450px;
       }
     `;
-  const style = {
-    '@media (min-width: 500px)' : {
-      width: '450px'
-    }
-  };
+  // const style = {
+  //   '@media (min-width: 500px)' : {
+  //     width: '450px'
+  //   }
+  // };
 
   return(
     // <div className="Person" style={style}>

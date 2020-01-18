@@ -51,17 +51,9 @@ togglePersonsHandler = () => {
 }
 
 render() {
+
   const style = {
-    backgroundColor: 'green',
-    color: 'white',
-    font: 'inherit',
-    border: '1px solid black',
-    padding: '8px',
-    cursor: 'pointer',
-    ':hover': {
-      backgroundColor: 'lightgreen',
-      color: 'black'
-    }
+
   };
 
   let persons = null;
@@ -80,11 +72,11 @@ render() {
         </div>
     );
 
-    style.backgroundColor = "red";
-    style[':hover'] = {
-      backgroundColor: 'salmon',
-      color: 'black'
-    }
+    // style.backgroundColor = "red";
+    // style[':hover'] = {
+    //   backgroundColor: 'salmon',
+    //   color: 'black'
+    // }
   }
 
   const classes = [];
@@ -101,7 +93,9 @@ render() {
         <h1> Hi, I'm a react app</h1>
         <p className={classes.join(" ")}> this is really working!</p>
         <button
-          style ={style}
+          className="button"
+          style={style}
+          alt={this.state.showPersons}
           onClick={this.togglePersonsHandler}> Toggle Persons
         </button>
         {persons}
