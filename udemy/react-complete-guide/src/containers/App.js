@@ -25,8 +25,12 @@ static getDerivedStateFromProps(props, state) {
   return state;
 }
 
+// componentWillMount(){
+//   console.log('[App.js] componentWillMount');
+// }
+
 componentDidMount(){
-  console.log('[App.js] componentDidMount'); 
+  console.log('[App.js] componentDidMount');
 }
 
 nameChangedHandler = (event, id) =>{
