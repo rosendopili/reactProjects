@@ -15,9 +15,9 @@ const cockpit = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log('[Cockpit.js] clean up work in useEffect');
+    console.log('[Cockpit.js] 2nd useEffect');
     return () => {
-      console.log('[Cockpit.js] clean up work in useEffect');
+      console.log('[Cockpit.js] clean up work in 2nd useEffect');
     };
   })
 
@@ -28,10 +28,10 @@ const cockpit = (props) => {
     btnClass = classes.Red;
   }
 
-  if (props.persons.length <=2){
+  if (props.personsLength <=2){
     assignedClasses.push(classes.red); //classes = ['red']
   }
-  if (props.persons.length <=1){
+  if (props.personsLength <=1){
     assignedClasses.push(classes.bold); //classes = ['red', 'bold']
   }
 
@@ -47,5 +47,5 @@ const cockpit = (props) => {
   );
 
 };
-
-export default cockpit;
+//wrap functional components that do not need to update with every change in parent component with React.memo.  This will enable memoization. 
+export default React.memo(cockpit);
