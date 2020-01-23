@@ -18,7 +18,7 @@ class App extends React.Component {
      });
      req.headers({
        "x-rapidapi-host": "movie-database-imdb-alternative.p.rapidapi.com",
-       "x-rapidapi-key": "45e2f50e68msh977cdb13550c471p169192jsne02100eccf4c"
+       "x-rapidapi-key": "API-KEY"
      });
      req.end((res) => {
        if (res.error) throw new Error(res.error);
