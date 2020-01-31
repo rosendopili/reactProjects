@@ -1,13 +1,14 @@
 import React, { PureComponent } from 'react';
 import Person from './Person/Person';
 
-//PureComponent is a functional component that automatically runs 'shouldComponentUpdate' with a complete prop check before updating the DOM. 
+//PureComponent is a functional component that automatically runs 'shouldComponentUpdate' with a complete prop check before updating the DOM.
 class Persons extends PureComponent {
   // static getDerivedStateFromProps(props, state){
   //   console.log('[Persons.js] getDerivedStateFromProps');
   //   return state;
   // }
 
+//Replaced by PureComponent//
   // componentWillReceiveProps(props){
   //   console.log('[Persons.js] componentWillReceiveProps');
   // }
