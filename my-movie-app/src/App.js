@@ -1,6 +1,7 @@
 import React from 'react';
 import Movie from './Movie.js';
 import Search from "./Search.js";
+import './App.css';
 import unirest from 'unirest';
 
 class App extends React.Component {
@@ -14,14 +15,13 @@ class App extends React.Component {
      req.query({
        "page": "1",
        "r": "json",
-       "s": "Avengers Endgame"
+       "s": title
      });
      req.headers({
        "x-rapidapi-host": "movie-database-imdb-alternative.p.rapidapi.com",
        "x-rapidapi-key": "API-KEY"
      });
      req.end((res) => {
-       if (res.error) throw new Error(res.error);
        const movies = res.body.Search;
        this.setState({movies});
       });
@@ -29,14 +29,12 @@ class App extends React.Component {
   render(){
     return (
       <div className="App">
-        <header>
         {
           this.state.movies.map((movie) => {
             return <Movie {...movie}/>
           })
         }
           <Search handleSendRequest={this.sendRequest}/>
-        </header>
       </div>
     );
   }
