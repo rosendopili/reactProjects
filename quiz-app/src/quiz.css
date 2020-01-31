@@ -1,0 +1,8 @@
+.selection{
+  border: 1px solid green;
+}
+
+.wrong{
+  border: 1px solid red;
+  text-decoration: line-through;
+}
