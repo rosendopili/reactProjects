@@ -1,8 +1,123 @@
-.selection{
+/* transition animation */
+
+.fade-appear {
+  opacity: 0;
+  z-index: 1;
+}
+
+.fade-appear.fade-appear-active {
+  opacity: 1;
+  transition: opacity 300ms linear;
+}
+
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms linear;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit.fade-exit-active{
+  opacity: 0;
+  transition: opacity 300ms linear;
+}
+
+.fade-exit-done {
+  opacity: 0;
+}
+
+.App {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.questionCard {
+  height: auto;
+  margin-top: 50px;
+}
+
+ol {
+  margin-top: 50px;
+}
+
+li{
+  text-align: left;
+  margin: 0 auto;
+  padding: 20px;
+  width: 400px;
+  font-size: 20px;
+}
+
+.right {
   border: 1px solid green;
 }
 
-.wrong{
+.wrong {
   border: 1px solid red;
   text-decoration: line-through;
+}
+
+.scoreCard {
+  margin-top: 30px;
+  height: 150px;
+}
+
+.getMessage {
+  margin-top: 50px;
+}
+
+.popup {
+  margin-top: 30px;
+}
+
+.button {
+  color: white;
+  background-color: black;
+  height: 40px;
+  width: auto;
+  border: none;
+  margin-top: 30px;
+}
+
+@media only screen
+  and (min-device-width: 300px)
+  and (max-device-width: 812px)
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: portrait) {
+
+    .App{
+      width: 90%;
+      display: block;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    .question{
+      text-align: center;
+      width: 90%;
+      display: block;
+      word-wrap: normal;
+      font-size: 25px;
+    }
+
+    ol{
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    li{
+      text-align: left;
+      margin: 0 auto;
+      padding: 10px;
+      width: 90%;
+      font-size: 20px;
+    }
+
 }

@@ -1,9 +1,11 @@
-import React, { Component, Fragment } from 'react';
-import { quizzes } from './quizzes';
-import { getMessage } from './messages';
+import React, { Component } from 'react';
 import Title from './title';
 import QuestionCard from './questionCard';
+import ScoreCard from './scoreCard';
+import { CSSTransition } from 'react-transition-group';
 import "./quiz.css";
+
+import { quizzes } from './quizzes';
 
 class Quiz extends Component {
   constructor(props){
@@ -14,11 +16,11 @@ class Quiz extends Component {
     currentQuestion: 0,
     choice: null,
     counter: 0,
-    next: "NEXT QUESTION",
     quizLoop: true,
-    // message: null
+    buttonData: " ",
   }
 
+  //Loads { quizzes } JSON data and defines state variables. Would be replaced with a fetch call if quizzes were being brought in from an external API.
   quizData = () => {
     const {
       currentQuiz,
@@ -32,78 +34,90 @@ class Quiz extends Component {
       this.setState(() => {
         return {
           quizTitle: quizzes[currentQuiz].title,
-          quizLength: quizzes[currentQuiz].questions.length,
+          quizLength: quizzes[currentQuiz].questions,
           quizQuestion: quizzes[currentQuiz].questions[currentQuestion].text,
           quizAnswers:
           shuffleArray
           (quizzes[currentQuiz].questions[currentQuestion].incorrectAnswers.concat
           (quizzes[currentQuiz].questions[currentQuestion].correctAnswer)),
           correctAnswer: quizzes[currentQuiz].questions[currentQuestion].correctAnswer,
-          // message: getMessage()
+          buttonData: " ",
+          choice: null
         }
       })
     }
 
+  //Begins app life cycle with a function call to quizData.
   componentDidMount() {
     this.quizData();
    }
 
+  //a question answer can only be selected once and cannot be changed after it is selected.
   selectChoice = answer => {
-    const {
-      correctAnswer,
-      choice,
-      counter,
-      message  } = this.state;
-
+    if(this.state.choice === null){
       this.setState({
-      choice: answer
-    })
-
-    console.log(choice + " playerChoice")
-    console.log(counter + " counter")
-    console.log(message + " message")
-    console.log(correctAnswer + " correctAnswer")
+        choice: answer
+      })
+    }
   }
 
-  //increments currentQuestion by 1 with every button click
- nextHandler = () => {
+  //Function to take you to the next question.  Will toggle the quizLoop to false at the completion of a quiz.
+ nextQuestion = () => {
    const {
      currentQuestion,
-     quizLength,
      currentQuiz,
+     quizLength,
      correctAnswer,
      choice,
-     counter,
-     message } = this.state;
+     counter } = this.state;
 
      if (choice === correctAnswer){
        this.setState({
-         counter: counter + 1,
-       })
-     }else if(counter > 0 && choice !== correctAnswer){
-       this.setState({
-           counter: counter -1,
+         counter: counter + 1
        })
      }
-     if(currentQuestion < quizLength -1)
+     if(currentQuestion < quizLength.length -1)
        this.setState({
-         currentQuestion: currentQuestion + 1
+         currentQuestion: currentQuestion + 1,
        })
        else{
          this.setState({
-           currentQuiz: currentQuiz + 1,
-           currentQuestion: 0,
-           // next: "NEXT QUIZ"
+           quizLoop: false,
+           buttonData: "NEXT QUIZ",
          })
-
+       } if(currentQuiz === quizzes.length - 1){
+        this.setState({
+          buttonData: "START OVER",
+        })
        }
-
-       // console.log(this.state.currentQuestion + " question #")
-       // console.log(this.state.currentQuiz + " quiz #")
-       // console.log(this.state.next)
      }
 
-   //updates the component when state is altered
+  //Function to take you to the next quiz. Toggles the quizLoop from false to true. Resets currentQuiz to 0 when the max length of { quizzes }  is reached.
+     nextQuiz = () => {
+       const {
+          currentQuestion,
+          currentQuiz,
+          quizLength } = this.state;
+
+       if (currentQuestion === quizLength.length - 1) {
+         this.setState({
+           quizLoop: true,
+           currentQuiz: currentQuiz + 1,
+           currentQuestion: 0,
+           counter: 0,
+         })
+       }
+       if(currentQuiz === quizzes.length - 1){
+         this.setState({
+           quizLoop: true,
+           currentQuiz: 0,
+           currentQuestion: 0,
+           counter: 0,
+         })
+       }
+     }
+
+   //Limits state udpates within the component to changes in currentQuestion value and/or currentQuiz value.
    componentDidUpdate(prevProps, prevState){
      if(this.state.currentQuestion !== prevState.currentQuestion ||
         this.state.currentQuiz !== prevState.currentQuiz){
@@ -111,18 +125,6 @@ class Quiz extends Component {
      }
    }
 
-   // messageHandler = () => {
-   //   const {message} = this.state;
-   //   if (message === true){
-   //     return (
-   //       <p> {message} </p>
-   //     )
-   //   }else if (message === false){
-   //     return (
-   //       "Wrong Answer"
-   //     )
-   //   }
-   // }
 
   render() {
 
@@ -130,47 +132,66 @@ class Quiz extends Component {
       quizQuestion,
       quizAnswers,
       quizTitle,
-      next,
       choice,
-      message,
-      correctAnswer } = this.state;
+      correctAnswer,
+      quizLoop,
+      counter,
+      quizLength,
+      buttonData,
+      answerResponse } = this.state;
 
+    if(quizLoop){
       return (
-        <div>
+        <div className="App">
+          <Title
+            title={quizTitle}/>
 
-          <Title title={quizTitle}/>
-            <QuestionCard
-              question={quizQuestion}
-              answers={quizAnswers}
-              choice={choice}
-              select={this.selectChoice}
-              correctAnswer={correctAnswer}
-            />
-                <button
-                onClick={this.nextHandler}
-                >
-                {next}
-                </button>
+              <QuestionCard
+                question={quizQuestion}
+                answers={quizAnswers}
+                choice={choice}
+                select={this.selectChoice}
+                correctAnswer={correctAnswer}
+                answerResponse={answerResponse}
+              />
+                {
+                  choice !== null &&
+                  choice === correctAnswer ?
+                  (<p className="popup">"Correct!"</p>) : null ||
+                  choice !== null &&
+                  choice !== correctAnswer ?
+                  (<p className="popup">"Incorrect..."</p>) : null
+                }
+
+                {choice !== null && (
+                  <button
+                  className="button"
+                  onClick={this.nextQuestion}
+                  >NEXT QUESTION
+                  </button>
+                )}
+
         </div>
       )
+    } else {
+      return (
+        <div>
+          <Title title={quizTitle}/>
+            < ScoreCard
+              counter={counter}
+              quizLength={quizLength}/>
+
+                <button
+                className="button"
+                onClick={this.nextQuiz}
+                >
+                {buttonData}
+                </button>
+
+        </div>
+      )
+    }
   }
 }
 
 export default Quiz;
-
-// <ol type="A">
-// {quizAnswers && quizAnswers.map(answer =>{
-//   return (
-//     <li>
-//     <p
-//     className={`ui message
-//       ${choice === answer ? "selection" : null}
-//       `}
-//       onClick={() => this.selectChoice(answer)}
-//       >
-//     {answer}
-//     </p>
-//     </li>
-//   )
-// })}
-// </ol>
