@@ -6,7 +6,6 @@ const QuestionCard = (props) => {
   const correct = props.choice === props.correctAnswer;
   const incorrect = props.choice !== props.correctAnswer;
 
-
   return (
       <div className="questionCard" >
         <h2 className="question">{props.question}</h2>

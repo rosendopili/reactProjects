@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import Title from './title';
 import QuestionCard from './questionCard';
 import ScoreCard from './scoreCard';
-import { CSSTransition } from 'react-transition-group';
+import ProgressBar from './progressBar';
 import "./quiz.css";
 
 import { quizzes } from './quizzes';
 
 class Quiz extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
+
   }
+
   state = {
     currentQuiz: 0,
     currentQuestion: 0,
@@ -18,6 +20,7 @@ class Quiz extends Component {
     counter: 0,
     quizLoop: true,
     buttonData: " ",
+    wrongCounter: 0
   }
 
   //Loads { quizzes } JSON data and defines state variables. Would be replaced with a fetch call if quizzes were being brought in from an external API.
@@ -34,7 +37,7 @@ class Quiz extends Component {
       this.setState(() => {
         return {
           quizTitle: quizzes[currentQuiz].title,
-          quizLength: quizzes[currentQuiz].questions,
+          quizLength: quizzes[currentQuiz].questions.length,
           quizQuestion: quizzes[currentQuiz].questions[currentQuestion].text,
           quizAnswers:
           shuffleArray
@@ -64,6 +67,7 @@ class Quiz extends Component {
   //Function to take you to the next question.  Will toggle the quizLoop to false at the completion of a quiz.
  nextQuestion = () => {
    const {
+     wrongCounter,
      currentQuestion,
      currentQuiz,
      quizLength,
@@ -76,7 +80,12 @@ class Quiz extends Component {
          counter: counter + 1
        })
      }
-     if(currentQuestion < quizLength.length -1)
+     else if (choice !== correctAnswer){
+       this.setState({
+         wrongCounter: wrongCounter + 1
+       })
+     }
+     if(currentQuestion < quizLength -1)
        this.setState({
          currentQuestion: currentQuestion + 1,
        })
@@ -85,26 +94,27 @@ class Quiz extends Component {
            quizLoop: false,
            buttonData: "NEXT QUIZ",
          })
-       } if(currentQuiz === quizzes.length - 1){
+       } if(currentQuiz === quizzes - 1){
         this.setState({
           buttonData: "START OVER",
         })
        }
      }
 
-  //Function to take you to the next quiz. Toggles the quizLoop from false to true. Resets currentQuiz to 0 when the max length of { quizzes }  is reached.
+  /*Function to take you to the next quiz. Toggles the quizLoop from false to true. Resets currentQuiz to 0 when the max length of { quizzes }  is reached.*/
      nextQuiz = () => {
        const {
           currentQuestion,
           currentQuiz,
           quizLength } = this.state;
 
-       if (currentQuestion === quizLength.length - 1) {
+       if (currentQuestion === quizLength - 1) {
          this.setState({
            quizLoop: true,
            currentQuiz: currentQuiz + 1,
            currentQuestion: 0,
            counter: 0,
+           wrongCounter: 0
          })
        }
        if(currentQuiz === quizzes.length - 1){
@@ -113,11 +123,13 @@ class Quiz extends Component {
            currentQuiz: 0,
            currentQuestion: 0,
            counter: 0,
+           wrongCounter: 0
          })
        }
      }
 
-   //Limits state udpates within the component to changes in currentQuestion value and/or currentQuiz value.
+
+   /*Limits state udpates within the component to changes in currentQuestion value and/or currentQuiz value. */
    componentDidUpdate(prevProps, prevState){
      if(this.state.currentQuestion !== prevState.currentQuestion ||
         this.state.currentQuiz !== prevState.currentQuiz){
@@ -129,6 +141,7 @@ class Quiz extends Component {
   render() {
 
     const {
+      wrongCounter,
       quizQuestion,
       quizAnswers,
       quizTitle,
@@ -170,7 +183,11 @@ class Quiz extends Component {
                   >NEXT QUESTION
                   </button>
                 )}
-
+                <ProgressBar
+                 quizLength={quizLength}
+                 counter={counter}
+                 wrongCounter={wrongCounter}
+                 />
         </div>
       )
     } else {
@@ -187,6 +204,12 @@ class Quiz extends Component {
                 >
                 {buttonData}
                 </button>
+
+                <ProgressBar
+                 quizLength={quizLength}
+                 counter={counter}
+                 wrongCounter={wrongCounter}
+                 />
 
         </div>
       )
