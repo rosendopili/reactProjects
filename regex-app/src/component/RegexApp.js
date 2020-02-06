@@ -4,33 +4,56 @@ class RegexApp extends Component {
   state = {
     answer: null,
     question: '',
-    counter: 0
+    correct: 0,
+    incorrect: 0
   }
 
   //setting up a string randomizer//
 
   questionGenerator = () => {
-    while (!this.state.question) this.state.question =
+    let string = '';
+    while (!string) string =
       Math.random().toString(36).substring(5);
-      console.log(this.state.question);
+      this.setState({
+        question: string
+      })
+
   }
 
   componentDidMount () {
     this.questionGenerator();
-    console.log(this.state.question)
   }
 
   //checking answer against question value//
 
   answerCheck = (question) => {
     const { answer,
-            counter } = this.state;
+            correct,
+            incorrect } = this.state;
     if (answer.test(question) === true){
-      this.questionGenerator();
       this.setState({
-        answer : true,
-        counter: counter + 1
+        correct: correct + 1
       })
+    }else{
+      this.setState({
+        incorrect: incorrect + 1
+      })
+    }
+  }
+
+  answerHandler = (e) => {
+    this.setState({
+      answer: e.target.value
+    })
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(this.state.counter !== prevState.counter){
+      this.setState({
+        question: '',
+        answer: null
+      })
+      this.questionGenerator();
     }
   }
 
@@ -39,18 +62,18 @@ class RegexApp extends Component {
       <div>
         <input
           type="text"
-          placeholder="answer">
-          </input>
+          label="REGEX HERE"
+          onChange={this.answerHandler}
+          placeholder="answer"
+        />
+
           <button
           onClick={this.answerCheck}
           > Submit
           </button>
+
           <ul>questions
-            {this.questionGenerator > 0 && this.questionGenerator.map(item =>{
-              return (
-                <li>{item}</li>
-              )
-            })}
+            <li> {this.state.question} </li>
           </ul>
       </div>
     )
