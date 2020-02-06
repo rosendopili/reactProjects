@@ -10,21 +10,14 @@ class RegexApp extends Component {
   //setting up a string randomizer//
 
   questionGenerator = () => {
-    let string = '';
-    while (!string) string = Math.random()
-                                 .toString(36)
-                                 .substring(5);
-    console.log(string + " non-state string");
-    this.setState(() => {
-      return {
-        question : this.string
-      }
-    })
-    console.log(this.state.question + " state string")
+    while (!this.state.question) this.state.question =
+      Math.random().toString(36).substring(5);
+      console.log(this.state.question);
   }
 
   componentDidMount () {
     this.questionGenerator();
+    console.log(this.state.question)
   }
 
   //checking answer against question value//
@@ -33,8 +26,9 @@ class RegexApp extends Component {
     const { answer,
             counter } = this.state;
     if (answer.test(question) === true){
+      this.questionGenerator();
       this.setState({
-        question : true,
+        answer : true,
         counter: counter + 1
       })
     }
