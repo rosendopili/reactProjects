@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 class RegexApp extends Component {
   state = {
-    answer: null,
+    answer: '',
     question: '',
     correct: 0,
     incorrect: 0
@@ -24,13 +24,21 @@ class RegexApp extends Component {
     this.questionGenerator();
   }
 
+  answerHandler = (e) => {
+    this.setState({
+      answer : e.target.value
+    })
+  }
+
   //checking answer against question value//
 
-  answerCheck = (question) => {
-    const { answer,
-            correct,
-            incorrect } = this.state;
-    if (answer.test(question) === true){
+  answerCheck = () => {
+    let { answer,
+          question,
+          correct,
+          incorrect } = this.state;
+    let regex = answer;
+    if (regex.test(question) === true){
       this.setState({
         correct: correct + 1
       })
@@ -39,12 +47,6 @@ class RegexApp extends Component {
         incorrect: incorrect + 1
       })
     }
-  }
-
-  answerHandler = (e) => {
-    this.setState({
-      answer: e.target.value
-    })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -62,13 +64,12 @@ class RegexApp extends Component {
       <div>
         <input
           type="text"
-          label="REGEX HERE"
           onChange={this.answerHandler}
           placeholder="answer"
         />
 
           <button
-          onClick={this.answerCheck}
+          onClick={e => this.answerCheck(e)}
           > Submit
           </button>
 
