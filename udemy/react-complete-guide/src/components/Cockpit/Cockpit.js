@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import classes from './Cockpit.css';
+import AuthContext from '../../context/auth-context';
 
 const cockpit = (props) => {
+
+  const toggleBtnRef = useRef(null);
 
   useEffect(() => {
     console.log('[Cockpit.js] useEffect');
     //Http request..
-    setTimeout(() => {
-      alert('Saved data to cloud!');
-    }, 1000);
+    // setTimeout(() => {
+    //   alert('Saved data to cloud!');
+    // }, 1000);
+    toggleBtnRef.current.click();
     return () => {
       console.log('[Cockpit.js] clean up work in useEffect');
     };
@@ -40,12 +44,16 @@ const cockpit = (props) => {
         <h1>{props.title}</h1>
         <p className={assignedClasses.join(" ")}> this is really working!</p>
         <button
+          ref={toggleBtnRef}
           className={btnClass}
           onClick={props.clicked}> Toggle Persons
         </button>
+        <AuthContext.Consumer>
+          {context => <button onClick={context.login}>Log in </button>}
+        </AuthContext.Consumer>
     </div>
   );
 
 };
-//wrap functional components that do not need to update with every change in parent component with React.memo.  This will enable memoization. 
+//wrap functional components that do not need to update with every change in parent component with React.memo.  This will enable memoization.
 export default React.memo(cockpit);
