@@ -31,5 +31,4 @@ const QuestionCard = (props) => {
   )
 }
 
-
 export default QuestionCard;

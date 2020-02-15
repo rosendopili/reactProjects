@@ -8,35 +8,43 @@ const ProgressBar = (props) => {
           wrongCounter } = props;
 
   const fullBar = (quizLength / quizLength) * 100;
-  const correctIncrement = (counter / quizLength) * 100;
-  const wrongIncrement = (wrongCounter / quizLength) * 100;
+  const increment =  100 / quizLength;
+  const correctCount = counter;
+  const quizProgress = counter + wrongCounter;
 
   const Meter = styled.div `
     width: ${fullBar}%;
     height: 40px;
-    border: 1px black solid;
     background-color: white;
+    position: relative;
   `
 
-
   const CorrectMeter = styled.div `
-    width: ${correctIncrement}%;
-    height: 50%;
+    width: ${increment * correctCount}%;
+    height: 100%;
     background-color: green;
+    position: absolute;
+    top: 0px;
+    z-index: 2;
   `
 
   const WrongMeter = styled.div `
-    width: ${wrongIncrement}%;
-    height: 50%;
+    width: ${increment * quizProgress}%;
+    height: 100%;
+    float: right;
     background-color: red;
+    position: absolute;
+    top: 0px;
+    z-index: 1;
   `
     return (
       <Meter
-        quizLength={props.quizLength}>
+        quizLength={props.quizLength}
+        counter={props.counter}
+        wrongCounter={props.wrongCounter}>
 
-          <CorrectMeter counter={props.counter}/>
-          <WrongMeter wrongCounter={props.wrongCounter}/>
-
+          <CorrectMeter/>
+          <WrongMeter/>
 
       </Meter>
     );
@@ -45,3 +53,4 @@ const ProgressBar = (props) => {
 export default ProgressBar;
 
 // <WrongMeter wrongCounter={props.wrongCounter}/>
+//

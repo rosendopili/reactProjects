@@ -23,7 +23,10 @@ class Quiz extends Component {
     wrongCounter: 0
   }
 
-  //Loads { quizzes } JSON data and defines state variables. Would be replaced with a fetch call if quizzes were being brought in from an external API.
+  /*Loads { quizzes } JSON data and defines state variables.
+ Would be replaced with a fetch call if quizzes were being
+ brought in from an external API.
+*/
   quizData = () => {
     const {
       currentQuiz,
@@ -50,12 +53,14 @@ class Quiz extends Component {
       })
     }
 
-  //Begins app life cycle with a function call to quizData.
+    //Begins app life cycle with a function call to quizData.
   componentDidMount() {
     this.quizData();
    }
 
-  //a question answer can only be selected once and cannot be changed after it is selected.
+
+     /*An answer can only be selected once and
+     cannot be changed after it is selected. */
   selectChoice = answer => {
     if(this.state.choice === null){
       this.setState({
@@ -64,7 +69,8 @@ class Quiz extends Component {
     }
   }
 
-  //Function to take you to the next question.  Will toggle the quizLoop to false at the completion of a quiz.
+  /*Function to take you to the next question.
+    Will toggle the quizLoop to false at the completion of a quiz.*/
  nextQuestion = () => {
    const {
      wrongCounter,
@@ -101,7 +107,9 @@ class Quiz extends Component {
        }
      }
 
-  /*Function to take you to the next quiz. Toggles the quizLoop from false to true. Resets currentQuiz to 0 when the max length of { quizzes }  is reached.*/
+     /*Function to take you to the next quiz.
+        Toggles the quizLoop from false to back to true.
+        Resets currentQuiz to 0 when the max length of { quizzes } is reached.*/
      nextQuiz = () => {
        const {
           currentQuestion,
@@ -128,8 +136,8 @@ class Quiz extends Component {
        }
      }
 
-
-   /*Limits state udpates within the component to changes in currentQuestion value and/or currentQuiz value. */
+       /*Limits state udpates within the component to changes
+       in currentQuestion value and/or currentQuiz value. */
    componentDidUpdate(prevProps, prevState){
      if(this.state.currentQuestion !== prevState.currentQuestion ||
         this.state.currentQuiz !== prevState.currentQuiz){
