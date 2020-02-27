@@ -16,7 +16,8 @@ const ProgressBar = (props) => {
     width: ${fullBar}%;
     height: 40px;
     background-color: white;
-    position: relative;
+    position: fixed;
+    bottom: 0; 
   `
 
   const CorrectMeter = styled.div `

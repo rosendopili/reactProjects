@@ -1,4 +1,4 @@
-.App {
+.app {
   text-align: center;
   margin: 0 auto;
 }
@@ -57,7 +57,7 @@ li{
   and (-webkit-min-device-pixel-ratio: 3)
   and (orientation: portrait) {
 
-    .App{
+    .app{
       width: 90%;
       display: block;
       text-align: center;
