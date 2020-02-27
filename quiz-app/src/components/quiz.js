@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import Title from './title';
-import QuestionCard from './questionCard';
-import ScoreCard from './scoreCard';
-import ProgressBar from './progressBar';
+import Title from './quizComponents/title';
+import QuestionCard from './quizComponents/questionCard';
+import ScoreCard from './quizComponents/scoreCard';
+import ProgressBar from './quizComponents/progressBar';
 import "./quiz.css";
 
-import { quizzes } from './quizzes';
+import { quizzes } from '../data/quizzes';
 
 class Quiz extends Component {
   constructor(props) {

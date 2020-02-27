@@ -1,6 +1,6 @@
 import React from 'react';
-import { getMessage } from './messages';
-import './quiz.css';
+import { getMessage } from '../../data/messages';
+import '../../components/quiz.css';
 
 const ScoreCard = (props) => {
   return (

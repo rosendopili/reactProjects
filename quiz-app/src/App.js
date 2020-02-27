@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { quizzes } from './quizzes';
+import { quizzes } from './data/quizzes';
 import './styles.css';
-import Quiz from './quiz';
+import Quiz from './components/quiz';
 
 console.log('Here are the quizzes:', quizzes);
 
