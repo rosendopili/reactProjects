@@ -5,12 +5,10 @@ import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
-<<<<<<< HEAD
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios-orders';
-=======
->>>>>>> parent of af5b2a0... module 212: firebase database added
+
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -28,13 +26,9 @@ class BurgerBuilder extends Component {
         ingredients: null,
         totalPrice: 4,
         purchasable: false,
-<<<<<<< HEAD
         purchasing: false,
         loading: false,
         error: false
-=======
-        purchasing: false
->>>>>>> parent of af5b2a0... module 212: firebase database added
     }
 
     componentDidMount () {
@@ -98,7 +92,6 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueHandler = () => {
-<<<<<<< HEAD
         // alert('You continue!');
         this.setState( { loading: true } );
         const order = {
@@ -122,9 +115,7 @@ class BurgerBuilder extends Component {
             .catch( error => {
                 this.setState( { loading: false, purchasing: false } );
             } );
-=======
         alert('You continue!');
->>>>>>> parent of af5b2a0... module 212: firebase database added
     }
 
     render () {
@@ -134,7 +125,6 @@ class BurgerBuilder extends Component {
         for ( let key in disabledInfo ) {
             disabledInfo[key] = disabledInfo[key] <= 0
         }
-<<<<<<< HEAD
         let orderSummary = null;
         let burger = this.state.error ? <p>Ingredients can't be loaded!</p> : <Spinner />;
 
@@ -160,20 +150,15 @@ class BurgerBuilder extends Component {
         if ( this.state.loading ) {
             orderSummary = <Spinner />;
         }
-=======
->>>>>>> parent of af5b2a0... module 212: firebase database added
+
         // {salad: true, meat: false, ...}
         return (
-            <Aux>
-                <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-                    <OrderSummary
-                        ingredients={this.state.ingredients}
-                        price={this.state.totalPrice}
-                        purchaseCancelled={this.purchaseCancelHandler}
-                        purchaseContinued={this.purchaseContinueHandler} />
-                </Modal>
-                {burger}
-            </Aux>
+          <Aux>
+              <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+                  {orderSummary}
+              </Modal>
+              {burger}
+          </Aux>
         );
     }
 }
