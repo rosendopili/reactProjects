@@ -37,8 +37,7 @@ class RegexApp extends Component {
           question,
           correct,
           incorrect } = this.state;
-    let regex = answer;
-    if (regex.test(question) === true){
+    if (answer.test(question) === true){
       this.setState({
         correct: correct + 1
       })
